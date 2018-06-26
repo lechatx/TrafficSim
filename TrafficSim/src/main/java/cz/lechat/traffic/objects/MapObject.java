@@ -3,7 +3,7 @@ package cz.lechat.traffic.objects;
 import org.eclipse.swt.graphics.GC;
 
 /**
- * Abstrakni objekt v mape jako hlavni spolecny predek
+ * Abstraktni objekt v mape jako hlavni spolecny predek
  * @author lechat
  *
  */
@@ -15,6 +15,9 @@ public abstract class MapObject {
 	// Pozice y
 	protected double y;
 	
+	// Pozice z - vrstva
+	protected int layer;
+	
 	/**
 	 * 
 	 * @param x
@@ -24,6 +27,17 @@ public abstract class MapObject {
 		super();
 		this.x = x;
 		this.y = y;
+	}
+	
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 * @param layer
+	 */
+	public MapObject(double x, double y, int layer) {
+		this(x,y);
+		this.layer = layer;
 	}
 
 	/**
@@ -57,8 +71,23 @@ public abstract class MapObject {
 	public void setY(double y) {
 		this.y = y;
 	}
-	
-	
+
+	/**
+	 * 
+	 * @return
+	 */
+	public int getLayer() {
+		return layer;
+	}
+
+	/**
+	 * 
+	 * @param layer
+	 */
+	public void setLayer(int layer) {
+		this.layer = layer;
+	}
+
 	/**
 	 * Slouzi k vykresleni daneho objektu na mapu
 	 */
@@ -73,7 +102,6 @@ public abstract class MapObject {
 	
 	/**
 	 * Vraci true pokud je dany objekt viditelny v aktivnim okne mapy
-	 * @return
 	 */
 	public abstract boolean isVisible(int x, int y, int width, int height);
 	
