@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseWheelListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.GC;
@@ -28,23 +30,33 @@ public class MapCanvas {
 	// Canvas
 	private Canvas mapCanvas;
 	
+	// Meritko mapy
+	private double scale = 5.0d;
+	
+	// Pozice nahledoveho okna
+	private int viewX = 0;
+	private int viewY = 0;
+	
 	private long lastRefreshTime = System.currentTimeMillis();
 	
 	// Seznam vsech objektu na mape
 	private List<MapObject> mapObjects = new ArrayList<>();
 	
-	
+	/**
+	 * 
+	 * @param shell
+	 */
 	public MapCanvas(final Shell shell) {
 		shell.setLayout(new FillLayout());
 		
 		
-		mapObjects.add(new Car(150d,150d));
-		mapObjects.add(new Car(250d,150d));
-		mapObjects.add(new Car(350d,150d));
-		mapObjects.add(new TrafficLights(450d,200d));
+		mapObjects.add(new Car(10d,10d));
+		mapObjects.add(new Car(15d,10d));
+		mapObjects.add(new Car(20d,10d));
+		mapObjects.add(new TrafficLights(22d,14d));
 		
-		mapObjects.add(new Car(550d,150d));
-		mapObjects.add(new TrafficLights(750d,200d));
+		mapObjects.add(new Car(30d,10d));
+		mapObjects.add(new TrafficLights(32d,14d));
 
 		// Create the canvas for drawing
 		mapCanvas = new Canvas(shell, SWT.NO_BACKGROUND);
@@ -66,8 +78,12 @@ public class MapCanvas {
 
 				// Vykresli vsechny objekty na mape
 				for (MapObject object : mapObjects) {
-					if (object.isVisible(0, 0, mapCanvas.getBounds().width, mapCanvas.getBounds().height)) {
-						object.draw(gcImage);
+					
+					int width = mapCanvas.getBounds().width;
+					int height = mapCanvas.getBounds().height;
+					
+					if (object.isVisible(0, 0, width, height)) {
+						object.draw(gcImage, viewX, viewY, scale);
 					}
 				}
 				
@@ -79,6 +95,18 @@ public class MapCanvas {
 				gcImage.dispose();
 			}
 		});
+		
+		// Zaregistrujeme udalost na kolecko mysi jako ovladani meritka mapy
+		mapCanvas.addMouseWheelListener(event -> { 
+			scale += (((double)event.count) / 50d) * scale/2 ;
+			System.out.println(String.format("Current scale : %.2f",scale));
+		});
+		
+//		mapCanvas.addMouseMoveListener(event -> {
+//			System.out.println(event.x);
+//			System.out.println(event.y);
+//		});
+		
 	}
 	
 	/**

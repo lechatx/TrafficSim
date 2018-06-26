@@ -9,7 +9,7 @@ public class TSStart {
 	private MapCanvas mapCanvas;
 	
 	// Interval obnovy mapy v ms
-	private static final int MAP_REFRESH_INTERVAL = 250;
+	private static final int MAP_REFRESH_INTERVAL = 25;
 
 	
 	/**

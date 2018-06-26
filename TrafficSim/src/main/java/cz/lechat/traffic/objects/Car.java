@@ -12,6 +12,9 @@ import org.eclipse.swt.widgets.Display;
  */
 public class Car extends MapObject {
 
+	private static final double carWidth = 2.2; // m
+	private static final double carHeight= 3.5; // m
+	
 
 	/**
 	 * 
@@ -26,9 +29,9 @@ public class Car extends MapObject {
 	 * 
 	 */
 	@Override
-	public void draw(GC gcImage) {
+	public void draw(GC gcImage, double viewX, double viewY, double scale) {
 		gcImage.setBackground(new Color(Display.getCurrent(), 128,128,128));
-		gcImage.fillRectangle((int)x, (int)y, 50, 50);
+		gcImage.fillRectangle(getObjectPositionX(viewX, scale), getObjectPositionY(viewY, scale), (int)(carHeight*scale), (int)(carWidth*scale));
 	}
 
 	/**

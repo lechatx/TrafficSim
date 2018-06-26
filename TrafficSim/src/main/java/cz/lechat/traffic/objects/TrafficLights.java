@@ -54,7 +54,7 @@ public class TrafficLights extends MapObject{
 	 * 
 	 */
 	@Override
-	public void draw(GC gcImage) {
+	public void draw(GC gcImage, double viewX, double viewY, double scale) {
 		Color colorRed = gray;
 		Color colorOrange = gray;
 		Color colorGreen = gray;
@@ -78,14 +78,19 @@ public class TrafficLights extends MapObject{
 						break;
 		}
 		
+		int posx = getObjectPositionX(viewX, scale);
+		int posy = getObjectPositionY(viewY, scale);
+		
+		int lightSize = (int)(1.25*scale);
+		
 		gcImage.setBackground(colorRed);
-		gcImage.fillRectangle((int)x, (int)y, 15, 15);
+		gcImage.fillRectangle(posx, posy, lightSize, lightSize);
 		
 		gcImage.setBackground(colorOrange);
-		gcImage.fillRectangle((int)x, (int)y+15, 15, 15);
+		gcImage.fillRectangle(posx, posy+lightSize, lightSize, lightSize);
 		
 		gcImage.setBackground(colorGreen);
-		gcImage.fillRectangle((int)x, (int)y+30, 15, 15);
+		gcImage.fillRectangle(posx, posy+lightSize*2, lightSize, lightSize);
 	}
 
 	/**

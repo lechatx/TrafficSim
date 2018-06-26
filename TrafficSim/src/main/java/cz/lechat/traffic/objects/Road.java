@@ -22,7 +22,7 @@ public class Road extends MapObject {
 	 * 
 	 */
 	@Override
-	public void draw(GC gcImage) {
+	public void draw(GC gcImage, double viewX, double viewY, double scale) {
 		// TODO Auto-generated method stub
 
 	}
